@@ -75,8 +75,8 @@ void OC6_Initialize(void) {
     OC6CON2 = 0x0000;
     // OC6RS 10000; 
     OC6RS = 0x2710;
-    // OC6R 592; 
-    OC6R = 0x0250;
+    // OC6R 1141; 
+    OC6R = 0x0475;
     // OC6TMR 0; 
     OC6TMR = 0x0000;
 

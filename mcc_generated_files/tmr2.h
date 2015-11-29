@@ -61,6 +61,7 @@ extern "C" {
 
 #endif
 
+#define TMR2_INTERRUPT_TICKER_FACTOR    1
 
     /**
       Section: Interface Routines
@@ -114,30 +115,6 @@ extern "C" {
      */
     void DRV_TMR2_Initialize(void) __attribute__((deprecated("\nThis will be removed in future MCC releases. \nUse TMR2_Initialize instead. ")));
 
-
-    /**
-      @Summary
-        Used to maintain the driver's state machine and implement its ISR
-
-      @Description
-        This routine is used to maintain the driver's internal state machine and
-        implement its ISR for interrupt-driven implementations.
-
-      @Param
-        None.
-
-      @Returns
-        None
- 
-      @Example 
-        Refer to the example of TMR2_Initialize();
-     */
-
-    void TMR2_Tasks_16BitOperation(void);
-    /**
-        void DRV_TMR2_Tasks_16BitOperation(void)
-     */
-    void DRV_TMR2_Tasks_16BitOperation(void) __attribute__((deprecated("\nThis will be removed in future MCC releases. \nUse TMR2_Tasks_16BitOperation instead. ")));
 
     /**
       @Summary
@@ -242,6 +219,22 @@ extern "C" {
      */
     uint16_t DRV_TMR2_Counter16BitGet(void) __attribute__((deprecated("\nThis will be removed in future MCC releases. \nUse TMR2_Counter16BitGet instead. ")));
 
+    /**
+      @Summary
+        Callback for timer interrupt.
+
+      @Description
+        This routine is callback for timer interrupt
+
+      @Param
+        None.
+
+      @Returns
+        None
+ 
+      @Example 
+        Refer to the example of TMR2_Initialize();
+     */
 
     void TMR2_CallBack(void);
 

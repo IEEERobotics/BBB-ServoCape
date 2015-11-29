@@ -10,4 +10,5 @@ mcc_generated_files/oc3.h  \
 mcc_generated_files/oc5.h  \
  mcc_generated_files/oc6.h  \
 mcc_generated_files/tmr1.h  \
- mcc_generated_files/tmr2.h 
+ mcc_generated_files/tmr2.h  \
+mcc_generated_files/i2c2.h 

@@ -75,8 +75,8 @@ void OC3_Initialize(void) {
     OC3CON2 = 0x0000;
     // OC3RS 10000; 
     OC3RS = 0x2710;
-    // OC3R 270; 
-    OC3R = 0x010E;
+    // OC3R 239; 
+    OC3R = 0x00EF;
     // OC3TMR 0; 
     OC3TMR = 0x0000;
 

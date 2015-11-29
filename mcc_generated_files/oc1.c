@@ -75,8 +75,8 @@ void OC1_Initialize(void) {
     OC1CON2 = 0x0000;
     // OC1RS 10000; 
     OC1RS = 0x2710;
-    // OC1R 512; 
-    OC1R = 0x0200;
+    // OC1R 758; 
+    OC1R = 0x02F6;
     // OC1TMR 0; 
     OC1TMR = 0x0000;
 

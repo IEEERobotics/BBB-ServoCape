@@ -85,7 +85,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config WINDIS = OFF    // Windowed WDT Disable->Standard Watchdog Timer
 #pragma config GWRP = OFF    // General Segment Write Protect->Write to program memory allowed
 #pragma config GCP = OFF    // General Segment Code Protect->Code protection is disabled
-#pragma config FWDTEN = ON    // Watchdog Timer Enable->WDT enabled in hardware
+#pragma config FWDTEN = OFF    // Watchdog Timer Enable->WDT disabled in hardware; SWDTEN bit disabled
 #pragma config JTAGEN = OFF    // JTAG Port Enable->Disabled
 
 #include "mcc.h"
@@ -101,7 +101,8 @@ void SYSTEM_Initialize(void) {
     OC5_Initialize();
     OC6_Initialize();
     TMR1_Initialize();
-  
+    TMR2_Initialize();
+    I2C2_Initialize();
 }
 
 void OSCILLATOR_Initialize(void) {

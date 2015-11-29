@@ -666,6 +666,298 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define IO_RA4_GetValue()         _RA4
 /**
   @Summary
+    Sets the GPIO pin, RB2, high using LATB2.
+
+  @Description
+    Sets the GPIO pin, RB2, high using LATB2.
+
+  @Preconditions
+    The RB2 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB2 high (1)
+    SDA2_SetHigh();
+    </code>
+
+ */
+#define SDA2_SetHigh()          _LATB2 = 1
+/**
+  @Summary
+    Sets the GPIO pin, RB2, low using LATB2.
+
+  @Description
+    Sets the GPIO pin, RB2, low using LATB2.
+
+  @Preconditions
+    The RB2 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB2 low (0)
+    SDA2_SetLow();
+    </code>
+
+ */
+#define SDA2_SetLow()           _LATB2 = 0
+/**
+  @Summary
+    Toggles the GPIO pin, RB2, using LATB2.
+
+  @Description
+    Toggles the GPIO pin, RB2, using LATB2.
+
+  @Preconditions
+    The RB2 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RB2
+    SDA2_SetToggle();
+    </code>
+
+ */
+#define SDA2_Toggle()           _LATB2 ^= 1
+/**
+  @Summary
+    Reads the value of the GPIO pin, RB2.
+
+  @Description
+    Reads the value of the GPIO pin, RB2.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RB2
+    postValue = SDA2_GetValue();
+    </code>
+
+ */
+#define SDA2_GetValue()         _RB2
+/**
+  @Summary
+    Configures the GPIO pin, RB2, as an input.
+
+  @Description
+    Configures the GPIO pin, RB2, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB2 as an input
+    SDA2_SetDigitalInput();
+    </code>
+
+ */
+#define SDA2_SetDigitalInput()  _TRISB2 = 1
+/**
+  @Summary
+    Configures the GPIO pin, RB2, as an output.
+
+  @Description
+    Configures the GPIO pin, RB2, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB2 as an output
+    SDA2_SetDigitalOutput();
+    </code>
+
+ */
+#define SDA2_SetDigitalOutput() _TRISB2 = 0
+/**
+  @Summary
+    Sets the GPIO pin, RB3, high using LATB3.
+
+  @Description
+    Sets the GPIO pin, RB3, high using LATB3.
+
+  @Preconditions
+    The RB3 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB3 high (1)
+    SCL2_SetHigh();
+    </code>
+
+ */
+#define SCL2_SetHigh()          _LATB3 = 1
+/**
+  @Summary
+    Sets the GPIO pin, RB3, low using LATB3.
+
+  @Description
+    Sets the GPIO pin, RB3, low using LATB3.
+
+  @Preconditions
+    The RB3 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB3 low (0)
+    SCL2_SetLow();
+    </code>
+
+ */
+#define SCL2_SetLow()           _LATB3 = 0
+/**
+  @Summary
+    Toggles the GPIO pin, RB3, using LATB3.
+
+  @Description
+    Toggles the GPIO pin, RB3, using LATB3.
+
+  @Preconditions
+    The RB3 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RB3
+    SCL2_SetToggle();
+    </code>
+
+ */
+#define SCL2_Toggle()           _LATB3 ^= 1
+/**
+  @Summary
+    Reads the value of the GPIO pin, RB3.
+
+  @Description
+    Reads the value of the GPIO pin, RB3.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RB3
+    postValue = SCL2_GetValue();
+    </code>
+
+ */
+#define SCL2_GetValue()         _RB3
+/**
+  @Summary
+    Configures the GPIO pin, RB3, as an input.
+
+  @Description
+    Configures the GPIO pin, RB3, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB3 as an input
+    SCL2_SetDigitalInput();
+    </code>
+
+ */
+#define SCL2_SetDigitalInput()  _TRISB3 = 1
+/**
+  @Summary
+    Configures the GPIO pin, RB3, as an output.
+
+  @Description
+    Configures the GPIO pin, RB3, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB3 as an output
+    SCL2_SetDigitalOutput();
+    </code>
+
+ */
+#define SCL2_SetDigitalOutput() _TRISB3 = 0
+/**
+  @Summary
     Sets the GPIO pin, RB5, high using LATB5.
 
   @Description

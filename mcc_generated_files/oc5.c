@@ -75,8 +75,8 @@ void OC5_Initialize(void) {
     OC5CON2 = 0x0000;
     // OC5RS 10000; 
     OC5RS = 0x2710;
-    // OC5R 511; 
-    OC5R = 0x01FF;
+    // OC5R 1141; 
+    OC5R = 0x0475;
     // OC5TMR 0; 
     OC5TMR = 0x0000;
 

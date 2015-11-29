@@ -9,6 +9,8 @@
             <resource customName="IO_RA2" digital="true" direction="INPUT" function="RA2" ioc="0" module="GPIO" name="RA2" start="false" type="pin" wpu="false"/>
             <resource customName="IO_RA3" digital="true" direction="OUTPUT" function="RA3" ioc="0" module="GPIO" name="RA3" start="true" type="pin" wpu="false"/>
             <resource customName="IO_RA4" digital="true" direction="INPUT" function="RA4" ioc="0" module="GPIO" name="RA4" start="false" type="pin" wpu="false"/>
+            <resource customName="SDA2" digital="true" direction="BIDIRECTIONAL" function="SDA2" ioc="0" module="I2C2" name="RB2" start="false" type="pin" wpu="false"/>
+            <resource customName="SCL2" digital="true" direction="BIDIRECTIONAL" function="SCL2" ioc="0" module="I2C2" name="RB3" start="false" type="pin" wpu="false"/>
             <resource customName="IO_RB5" digital="true" direction="OUTPUT" function="RB5" ioc="0" module="GPIO" name="RB5" start="true" type="pin" wpu="false"/>
             <resource customName="IO_RB6" digital="true" direction="OUTPUT" function="RB6" ioc="0" module="GPIO" name="RB6" start="true" type="pin" wpu="false"/>
             <resource customName="IO_RB7" digital="true" direction="OUTPUT" function="RB7" ioc="0" module="GPIO" name="RB7" start="true" type="pin" wpu="false"/>
@@ -18,14 +20,18 @@
             <resource customName="" digital="true" direction="OUTPUT" function="OC3" ioc="0" module="OC3" name="RB13" start="false" type="pin" wpu="false"/>
             <resource customName="" digital="true" direction="OUTPUT" function="OC2" ioc="0" module="OC2" name="RB14" start="false" type="pin" wpu="false"/>
             <resource customName="" digital="true" direction="OUTPUT" function="OC1" ioc="0" module="OC1" name="RB15" start="false" type="pin" wpu="false"/>
-            <file checksum="330414580" modified="false" name="pin_manager.c" path="mcc_generated_files/pin_manager.c"/>
-            <file checksum="2015295728" modified="false" name="pin_manager.h" path="mcc_generated_files/pin_manager.h"/>
+            <file checksum="3893475809" modified="false" name="pin_manager.c" path="mcc_generated_files/pin_manager.c"/>
+            <file checksum="1246657776" modified="false" name="pin_manager.h" path="mcc_generated_files/pin_manager.h"/>
         </manager>
         <manager generated="true" name="Interrupt Manager" reloadPin="manual">
             <resource name="TI" type="TMR1" value="1"/>
-            <file checksum="841583958" modified="false" name="interrupt_manager.c" path="mcc_generated_files/interrupt_manager.c"/>
+            <resource name="SICI" type="I2C2" value="1"/>
+            <resource name="TI" type="TMR2" value="1"/>
+            <file checksum="83866618" modified="false" name="interrupt_manager.c" path="mcc_generated_files/interrupt_manager.c"/>
             <file checksum="3056337239" modified="false" name="interrupt_manager.h" path="mcc_generated_files/interrupt_manager.h"/>
             <interrupt module="TMR1" name="TI" priority="1"/>
+            <interrupt module="I2C2" name="SICI" priority="1"/>
+            <interrupt module="TMR2" name="TI" priority="1"/>
         </manager>
         <manager generated="true" name="System" reloadPin="manual">
             <initializer comment="" name="Initialize">
@@ -77,13 +83,13 @@
             <setting name="WINDIS" option="OFF"/>
             <setting name="GWRP" option="OFF"/>
             <setting name="GCP" option="OFF"/>
-            <setting name="FWDTEN" option="ON"/>
+            <setting name="FWDTEN" option="OFF"/>
             <setting name="JTAGEN" option="OFF"/>
             <setting name="Primary Oscillator" option="8000000"/>
             <setting name="Secondary Oscillator" option="31000"/>
             <setting name="generateConfigBits" option="true"/>
-            <file checksum="8999699" modified="true" name="mcc.c" path="mcc_generated_files/mcc.c"/>
-            <file checksum="1933458247" modified="false" name="mcc.h" path="mcc_generated_files/mcc.h"/>
+            <file checksum="2687199115" modified="false" name="mcc.c" path="mcc_generated_files/mcc.c"/>
+            <file checksum="727400591" modified="false" name="mcc.h" path="mcc_generated_files/mcc.h"/>
         </manager>
     </managers>
     <modules>
@@ -143,12 +149,12 @@
                 <setting name="OC32" option="disabled" register="OC1CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC1CON2"/>
                 <setting name="OC1RS" option="10000" register="OC1RS"/>
-                <setting name="OC1R" option="512" register="OC1R"/>
+                <setting name="OC1R" option="758" register="OC1R"/>
                 <setting name="OC1TMR" option="0" register="OC1TMR"/>
-                <additionalSetting name="onTime" option="5.12 %"/>
+                <additionalSetting name="onTime" option="7.580000000000001 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="3009107034" modified="false" name="oc1.c" path="mcc_generated_files/oc1.c"/>
+            <file checksum="59921538" modified="false" name="oc1.c" path="mcc_generated_files/oc1.c"/>
             <file checksum="1197749821" modified="false" name="oc1.h" path="mcc_generated_files/oc1.h"/>
         </module>
         <module generated="true" mode="OC" name="OC2" order="2" reloadPin="auto" type="ocmp">
@@ -174,12 +180,12 @@
                 <setting name="OC32" option="disabled" register="OC2CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC2CON2"/>
                 <setting name="OC2RS" option="10000" register="OC2RS"/>
-                <setting name="OC2R" option="270" register="OC2R"/>
+                <setting name="OC2R" option="239" register="OC2R"/>
                 <setting name="OC2TMR" option="0" register="OC2TMR"/>
-                <additionalSetting name="onTime" option="2.7 %"/>
+                <additionalSetting name="onTime" option="2.39 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="2747094230" modified="false" name="oc2.c" path="mcc_generated_files/oc2.c"/>
+            <file checksum="611276016" modified="false" name="oc2.c" path="mcc_generated_files/oc2.c"/>
             <file checksum="3518576301" modified="false" name="oc2.h" path="mcc_generated_files/oc2.h"/>
         </module>
         <module generated="true" mode="OC" name="OC3" order="3" reloadPin="auto" type="ocmp">
@@ -205,12 +211,12 @@
                 <setting name="OC32" option="disabled" register="OC3CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC3CON2"/>
                 <setting name="OC3RS" option="10000" register="OC3RS"/>
-                <setting name="OC3R" option="270" register="OC3R"/>
+                <setting name="OC3R" option="239" register="OC3R"/>
                 <setting name="OC3TMR" option="0" register="OC3TMR"/>
-                <additionalSetting name="onTime" option="2.7 %"/>
+                <additionalSetting name="onTime" option="2.39 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="2157860160" modified="false" name="oc3.c" path="mcc_generated_files/oc3.c"/>
+            <file checksum="22041946" modified="false" name="oc3.c" path="mcc_generated_files/oc3.c"/>
             <file checksum="1545418525" modified="false" name="oc3.h" path="mcc_generated_files/oc3.h"/>
         </module>
         <module generated="true" mode="OC" name="OC4" order="4" reloadPin="auto" type="ocmp">
@@ -236,12 +242,12 @@
                 <setting name="OC32" option="disabled" register="OC4CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC4CON2"/>
                 <setting name="OC4RS" option="10000" register="OC4RS"/>
-                <setting name="OC4R" option="270" register="OC4R"/>
+                <setting name="OC4R" option="1280" register="OC4R"/>
                 <setting name="OC4TMR" option="0" register="OC4TMR"/>
-                <additionalSetting name="onTime" option="2.7 %"/>
+                <additionalSetting name="onTime" option="12.8 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="983586215" modified="false" name="oc4.c" path="mcc_generated_files/oc4.c"/>
+            <file checksum="1009079752" modified="false" name="oc4.c" path="mcc_generated_files/oc4.c"/>
             <file checksum="3866245005" modified="false" name="oc4.h" path="mcc_generated_files/oc4.h"/>
         </module>
         <module generated="true" mode="OC" name="OC5" order="5" reloadPin="auto" type="ocmp">
@@ -267,12 +273,12 @@
                 <setting name="OC32" option="disabled" register="OC5CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC5CON2"/>
                 <setting name="OC5RS" option="10000" register="OC5RS"/>
-                <setting name="OC5R" option="511" register="OC5R"/>
+                <setting name="OC5R" option="1141" register="OC5R"/>
                 <setting name="OC5TMR" option="0" register="OC5TMR"/>
-                <additionalSetting name="onTime" option="5.11 %"/>
+                <additionalSetting name="onTime" option="11.41 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="1304057382" modified="false" name="oc5.c" path="mcc_generated_files/oc5.c"/>
+            <file checksum="2150061625" modified="false" name="oc5.c" path="mcc_generated_files/oc5.c"/>
             <file checksum="1893087229" modified="false" name="oc5.h" path="mcc_generated_files/oc5.h"/>
         </module>
         <module generated="true" mode="OC" name="OC6" order="6" reloadPin="auto" type="ocmp">
@@ -298,12 +304,12 @@
                 <setting name="OC32" option="disabled" register="OC6CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC6CON2"/>
                 <setting name="OC6RS" option="10000" register="OC6RS"/>
-                <setting name="OC6R" option="592" register="OC6R"/>
+                <setting name="OC6R" option="1141" register="OC6R"/>
                 <setting name="OC6TMR" option="0" register="OC6TMR"/>
-                <additionalSetting name="onTime" option="5.92 %"/>
+                <additionalSetting name="onTime" option="11.41 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="1541822064" modified="false" name="oc6.c" path="mcc_generated_files/oc6.c"/>
+            <file checksum="976574112" modified="false" name="oc6.c" path="mcc_generated_files/oc6.c"/>
             <file checksum="4213913709" modified="false" name="oc6.h" path="mcc_generated_files/oc6.h"/>
         </module>
         <module generated="true" mode="TMR" name="TMR2" order="8" reloadPin="auto" type="tmr_32b">
@@ -316,18 +322,62 @@
                 <setting name="T32" option="disabled" register="T2CON"/>
                 <setting name="TON" option="enabled" register="T2CON"/>
                 <setting name="TMR2" option="0" register="TMR2"/>
-                <setting name="PR2" option="0" register="PR2"/>
+                <setting name="PR2" option="4000" register="PR2"/>
                 <additionalSetting name="timerFrequency" option="4000000.0"/>
                 <additionalSetting name="tmrReloadValue" option="0"/>
-                <additionalSetting name="tmrPeriod" option="0.000 ns"/>
+                <additionalSetting name="tmrPeriod" option="1.000 ms"/>
                 <additionalSetting name="tickerPeriod" option="1"/>
-                <additionalSetting name="tmrPeriodValue" option="0"/>
-                <additionalSetting name="tickerInSec" option="0.000 ns"/>
+                <additionalSetting name="tmrPeriodValue" option="4000"/>
+                <additionalSetting name="tickerInSec" option="1.000 ms"/>
             </initializer>
-            <setting name="TI" option="false"/>
+            <setting name="TI" option="true"/>
             <setting name="tmrUpperHalf" option="0"/>
-            <file checksum="2499183247" modified="false" name="tmr2.c" path="mcc_generated_files/tmr2.c"/>
-            <file checksum="2344066101" modified="false" name="tmr2.h" path="mcc_generated_files/tmr2.h"/>
+            <file checksum="2045568559" modified="true" name="tmr2.c" path="mcc_generated_files/tmr2.c"/>
+            <file checksum="2887787270" modified="false" name="tmr2.h" path="mcc_generated_files/tmr2.h"/>
+        </module>
+        <module generated="true" mode="I2C Slave" name="I2C2" order="9" reloadPin="auto" type="i2c_upb">
+            <initializer comment="" name="Initialize">
+                <setting name="I2CRXDATA" option="disabled" register="I2C2RCV"/>
+                <setting name="I2CTXDATA" option="disabled" register="I2C2TRN"/>
+                <setting name="I2CBRG" option="disabled" register="I2C2BRG"/>
+                <setting name="RCEN" option="disabled" register="I2C2CONL"/>
+                <setting name="A10M" option="7 Bit" register="I2C2CONL"/>
+                <setting name="RSEN" option="disabled" register="I2C2CONL"/>
+                <setting name="STRICT" option="disabled" register="I2C2CONL"/>
+                <setting name="ACKEN" option="disabled" register="I2C2CONL"/>
+                <setting name="DISSLW" option="disabled" register="I2C2CONL"/>
+                <setting name="SCLREL" option="Holds" register="I2C2CONL"/>
+                <setting name="SEN" option="disabled" register="I2C2CONL"/>
+                <setting name="ACKDT" option="Sends ACK" register="I2C2CONL"/>
+                <setting name="GCEN" option="disabled" register="I2C2CONL"/>
+                <setting name="SMEN" option="disabled" register="I2C2CONL"/>
+                <setting name="PEN" option="disabled" register="I2C2CONL"/>
+                <setting name="I2CEN" option="enabled" register="I2C2CONL"/>
+                <setting name="I2CSIDL" option="disabled" register="I2C2CONL"/>
+                <setting name="STREN" option="disabled" register="I2C2CONL"/>
+                <setting name="BOEN" option="disabled" register="I2C2CONH"/>
+                <setting name="AHEN" option="disabled" register="I2C2CONH"/>
+                <setting name="SBCDE" option="disabled" register="I2C2CONH"/>
+                <setting name="SDAHT" option="disabled" register="I2C2CONH"/>
+                <setting name="DHEN" option="disabled" register="I2C2CONH"/>
+                <setting name="PCIE" option="disabled" register="I2C2CONH"/>
+                <setting name="SCIE" option="disabled" register="I2C2CONH"/>
+                <setting name="IWCOL" option="disabled" register="I2C2STAT"/>
+                <setting name="P" option="disabled" register="I2C2STAT"/>
+                <setting name="S" option="disabled" register="I2C2STAT"/>
+                <setting name="I2COV" option="disabled" register="I2C2STAT"/>
+                <setting name="R_nW" option="disabled" register="I2C2STAT"/>
+                <setting name="BCL" option="disabled" register="I2C2STAT"/>
+                <setting name="D_nA" option="disabled" register="I2C2STAT"/>
+                <setting name="ADD" option="16" register="I2C2ADD"/>
+                <setting name="MSK" option="127" register="I2C2MSK"/>
+                <additionalSetting name="slaveAddressMaskChanged" option="0x7F"/>
+                <additionalSetting name="slaveAddressChanged" option="0x10"/>
+                <additionalSetting name="0x7f" option="0x7f"/>
+                <additionalSetting name="0x0" option="0x0"/>
+            </initializer>
+            <file checksum="1321613095" modified="false" name="i2c2.c" path="mcc_generated_files/i2c2.c"/>
+            <file checksum="612631354" modified="false" name="i2c2.h" path="mcc_generated_files/i2c2.h"/>
         </module>
     </modules>
 </configuration>

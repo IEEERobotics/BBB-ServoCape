@@ -59,6 +59,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "oc6.h"
 #include "tmr1.h"
 #include "tmr2.h"
+#include "i2c2.h"
 
 #define _XTAL_FREQ  8000000
 

@@ -429,7 +429,7 @@ inline void __attribute__((always_inline)) I2C2_ReceiveProcess(void) {
     if(I2C2RCV != 0xFF){ 
         LocalMemory[i] = I2C2_RECEIVE_REG; 
          i++;
-         if(i >= 5){
+         if(i >= 6){
              TransmitComplete++;
               i = 0;
          }

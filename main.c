@@ -8,7 +8,7 @@
     main.c
 
   Summary:
-    This is the main file generated using MPLAB® Code Configurator
+     This is the main file generated using MPLAB® Code Configurator
 
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
@@ -59,7 +59,7 @@ int Timer2Variable = 0;
 int S1 = 1;               //Increments with every switch one press~State variable 
 int TransmitComplete = 0;               //Increments with every switch two press 
 int cycles; 
-uint8_t LocalMemory[5]; 
+uint8_t LocalMemory[6]; 
 int i = 0;  
 
 //Functions
@@ -68,7 +68,7 @@ void debounce(int);      // Debounce function which waits multiples of .1 second
 void FastDebounce(int); 
 void StateMaker(int);    // Blinker of LEDs to show state 
 void MakeSelection(int);//Calls functions based on state 
-void MoveServo1_Degrees(int);
+void MoveServo1_Degrees(int);        
 void MoveServo2_Degrees(int);
 void MoveServo3_Degrees(int);
 void MoveServo4_Degrees(int);
@@ -77,6 +77,10 @@ void ResetMemory();
 void SetTo90();
 void SetTo180();
 void SetTo0();
+void Grab();
+void LetGo();
+void GrabBlock();
+void SetToInitial();
 void TestRange();
 void TestServo1();       //State 1 function 
 void TestServo2();       //State 2 function
@@ -90,51 +94,64 @@ int main(void) {
     // initialize the device
     SYSTEM_Initialize();
     
-    
+    //Light show 
     debounce(2);
-    PORTAbits.RA3 = 0;
+    PORTAbits.RA3 = 0;    //Led 4 
+    debounce(5);
+    PORTBbits.RB5 = 0;    //Led 3
+    debounce(2);
+    PORTBbits.RB7 = 0;    //Led 2
     debounce(1);
-    PORTAbits.RA1 = 1; 
-    debounce(1);
-    PORTBbits.RB5 = 0; 
-    debounce(1);
-    PORTBbits.RB7 = 0; 
-    debounce(1);
-    PORTBbits.RB6 = 0; 
+    PORTBbits.RB6 = 0;    //Led 1
     debounce(1);
     
     ResetMemory();
     
     while (1) {
+        //All mighty while loop
         
         if(TransmitComplete){
             TransmitComplete = 0; 
-            MoveServo1_Degrees(LocalMemory[0]); 
+            SetTo90();
+            if(LocalMemory[0]== 0x01){
+            MoveServo1_Degrees(LocalMemory[1]); 
             debounce(1);
-            MoveServo2_Degrees(LocalMemory[0]);
+            MoveServo4_Degrees(LocalMemory[4]);
             debounce(1);
-            MoveServo3_Degrees(LocalMemory[0]);
+            MoveServo3_Degrees(LocalMemory[3]);
             debounce(1);
-            MoveServo4_Degrees(LocalMemory[0]);
+            MoveServo2_Degrees(LocalMemory[2]);
             debounce(1);
-            MoveServo5_Degrees(LocalMemory[0]);
-            
+            MoveServo5_Degrees(LocalMemory[5]);
+            ResetMemory();  
+            }
+            else if(LocalMemory[0]== 0x02){
+                
+                switch(LocalMemory[1]){
+                    case 1: GrabBlock();
+                        break;
+                    case 2: break;
+                    case 3: break;
+                    case 4: break;
+                    case 5: break;
+                            
+                    
+                }
+            }
             
         }
         
         if(PORTAbits.RA0 == 1){        //S1 pressed
             S1++; 
-            
             if(S1==10)
                                      //Overflow Condition~No State 9
                 S1 = 1; 
             
             debounce(10);
-            
             StateMaker(S1);         //Set the LEDs 
         }
         
-        if(PORTAbits.RA2 == 1){
+        if(PORTAbits.RA2 == 1){          //S2 pressed 
             
             PORTBbits.RB6 = 1;        //Signifies selection with blinking of light
             debounce(5);
@@ -148,7 +165,7 @@ int main(void) {
             
             MakeSelection(S1); 
             
-            PORTBbits.RB6 = 1;        //Signifies selection with blinking of light
+            PORTBbits.RB6 = 1;        //Signifies end of selection with blinking of light
             debounce(5);
             PORTBbits.RB6 = 0;
             debounce(3); 
@@ -159,28 +176,24 @@ int main(void) {
             PORTBbits.RB6 = 1;
             debounce(1);
             PORTBbits.RB6 = 0; 
-            
-            
+          
         }
     }
-
     return -1;
 }
 
 
 
 void debounce(int cycles){
-    
-    TimerVariable = 0;
-    
-    while(TimerVariable <= cycles);
+   TimerVariable = 0;
+   while(TimerVariable <= cycles);
     
 }
 
 void StateMaker(S1){
     
     switch(S1){
-        case 1:  PORTBbits.RB7 = 0;
+        case 1:  PORTBbits.RB7 = 0;   
                  debounce(1);
                  PORTBbits.RB5 = 0;
                  debounce(1);
@@ -233,10 +246,9 @@ void StateMaker(S1){
                  debounce(1); 
                  PORTBbits.RB5 = 1; 
                  break;
-              
+         
     }
 }
-
 
 void MakeSelection(S1){
     
@@ -262,10 +274,9 @@ void MakeSelection(S1){
         case 7:  SetTo90();
                  debounce(1);
                  break;
-        case 8:  SetTo0();
-                 debounce(1);
+        case 8:  GrabBlock();
                  break;
-        case 9:  SetTo180();
+        case 9:  Jog();
                  break;
                  
         
@@ -291,6 +302,7 @@ void SetTo180(){
     
      
 }
+
 void SetTo90(){
                       ///Actually sets to vertically straight not 90 for each servo 
     OC1R = 0xE0;       
@@ -308,7 +320,7 @@ void SetTo90(){
 }
 
 void SetTo0(){
-    
+               //Sets all to 0 degrees 
     OC1R = 0xE0;
     debounce(2);
     OC4R = 0x150;
@@ -323,25 +335,22 @@ void SetTo0(){
     debounce(5);
 }
 
-
 void MoveServo1_Degrees(int degrees){
-    double currentposition = OC1R; 
-    int desiredposition = 0xE0 + (degrees*5.867);         
-  
-    
+    double currentposition = OC1R;                    
+    int desiredposition = 0xE0 + (degrees*5.867);     //5.867 is calculated degree step for servo 1       
+       
     if(currentposition > desiredposition){           //moving negative angles
         while(currentposition >= desiredposition ){
             OC1R = (int)currentposition;
-            FastDebounce(5);
+            FastDebounce(15);
             currentposition -= 5.867;
         }
-       
     }
     else if(currentposition < desiredposition){
         while(currentposition <= desiredposition ){
-            OC1R = currentposition;
-            FastDebounce(5);
-            currentposition += 0x06;
+            OC1R = (int)currentposition;
+            FastDebounce(15);
+            currentposition += 5.867;
         }
         
     }
@@ -349,7 +358,6 @@ void MoveServo1_Degrees(int degrees){
     OC1R = desiredposition; 
 }     
                        
-
 void MoveServo2_Degrees(int degrees){
     int currentposition = OC2R; 
     int desiredposition = 0xEF + degrees*0x06;  
@@ -372,14 +380,8 @@ void MoveServo2_Degrees(int degrees){
         }
         
     }
-    
-     
-                       
-    
-    
-    
+ 
 }
-
 
 void MoveServo3_Degrees(int degrees){
     int currentposition = OC3R; 
@@ -390,7 +392,7 @@ void MoveServo3_Degrees(int degrees){
     if(currentposition > desiredposition){           //moving negative angles
         while(currentposition >= desiredposition ){
             OC3R = currentposition;
-            FastDebounce(10);
+            FastDebounce(4);
             currentposition -= 0x06;
         }
        
@@ -398,31 +400,24 @@ void MoveServo3_Degrees(int degrees){
     else if(currentposition < desiredposition){
         while(currentposition <= desiredposition ){
             OC3R = currentposition;
-            FastDebounce(10);
+            FastDebounce(4);
             currentposition += 0x06;
         }
         
     }
    
-    
-     
-                       
-    
-    
-    
 }
-
 
 void MoveServo4_Degrees(int degrees){
     int currentposition = OC4R; 
     int desiredposition = 0xEF + degrees*0x06;  
     int neededchange = desiredposition - currentposition;  
-    int stepsize ;  
+    
     
     if(currentposition > desiredposition){           //moving negative angles
         while(currentposition >= desiredposition ){
             OC4R = currentposition;
-            FastDebounce(10);
+            FastDebounce(3);
             currentposition -= 0x06;
         }
        
@@ -430,7 +425,7 @@ void MoveServo4_Degrees(int degrees){
     else if(currentposition < desiredposition){
         while(currentposition <= desiredposition ){
             OC4R = currentposition;
-            FastDebounce(10);
+            FastDebounce(3);
             currentposition += 0x06;
         }
         
@@ -440,10 +435,9 @@ void MoveServo4_Degrees(int degrees){
     
 }
 
-
 void MoveServo5_Degrees(int degrees){
     int currentposition = OC5R; 
-    int desiredposition = 0x110 + degrees*0x04;  
+    int desiredposition = 0x150 + degrees*0x04;  
     int neededchange = desiredposition - currentposition;  
     int stepsize = neededchange/10;  
     
@@ -451,61 +445,67 @@ void MoveServo5_Degrees(int degrees){
         while(currentposition >= desiredposition ){
             currentposition += stepsize;
             OC5R = currentposition;
-            debounce(1);
+            FastDebounce(3);
         }
     }
     else if(currentposition < desiredposition){
         while(currentposition <= desiredposition ){
             currentposition += stepsize;
             OC5R = currentposition;
-            debounce(1);
+            FastDebounce(3);
         }
     }
-   
+  
+}
+
+void Grab(){
     
-     
-                       
+    while(OC6R>=0x230){
+        OC6R--;
+        FastDebounce(1);
+    }
+    OC6R = 0x235;
+}
     
+void LetGo(){
+    OC6R=0x495;
+}  
+
+void SetToInitial(){
+    
+    debounce(5);
+    OC1R =0x2F6;
+    debounce(1);
+    OC2R = 0xE0;
+    debounce(1);
+    OC3R = 0xEF;
+    debounce(1);
+    OC4R = 0x500;
+    debounce(1);
+    OC5R = 0x485;
+    debounce(1);
+    OC6R = 0x480;
     
     
 }
-
-
-    
-    
-
     
     
 void Jog(){
     
-    MoveServo1_Degrees(0); 
-    MoveServo2_Degrees(0);
-    MoveServo3_Degrees(0);
+    SetTo90();
     
-    debounce(5);
- 
-    
-  
-
+    OC5R = 0x465;
     debounce(100);
+    OC5R = 0x150;
+    debounce(100);
+    OC1R = 0xE0;
+    MoveServo5_Degrees(0);
+    MoveServo5_Degrees(180);
+    OC1R = 0x485; 
     
-
-    /*
-    while(1){
-        while(OC6R<0x450){
-            OC6R++;
-            FastDebounce(1);
-            
-        }
-        
-        while(OC6R>0x200){
-            OC6R--; 
-            FastDebounce(1);
-            
-        }
-        OC1R--;
-        
-        if(OC1R )*/
+    
+    
+    
     
 }
 void TestRange(){
@@ -542,7 +542,6 @@ void TestServo2(){
     
 }
 
-
 void TestServo3(){
     MoveServo3_Degrees(0);
     debounce(100);
@@ -551,7 +550,6 @@ void TestServo3(){
     MoveServo3_Degrees(90);
     
 }
-
 
 void TestServo4(){
     MoveServo4_Degrees(0);
@@ -562,7 +560,6 @@ void TestServo4(){
     
 }
 
-
 void TestServo5(){
     OC5R = 0x110;  
     while(OC5R <= 0x465){
@@ -570,7 +567,6 @@ void TestServo5(){
         debounce(1); 
     }
 }
-
 
 void TestServo6(){
     
@@ -595,6 +591,50 @@ void FastDebounce(int cycles){
     
     Timer2Variable = 0;
     while(Timer2Variable <= cycles); 
+    
+}
+
+
+
+//=================================================================================
+
+void GrabBlock(){
+    MoveServo1_Degrees(0);
+    debounce(1);
+    OC2R = 0x115;
+    debounce(1);
+    MoveServo5_Degrees(5);
+    MoveServo4_Degrees(65);
+    debounce(10);
+    MoveServo4_Degrees(50);
+    debounce(10);
+    MoveServo4_Degrees(5);
+    debounce(50);
+    Grab();
+    debounce(100);
+    OC4R =0x2F6;
+    debounce(50);
+    MoveServo1_Degrees(90);
+    MoveServo3_Degrees(45);
+    OC2R = 0x115;
+    MoveServo4_Degrees(45);
+    MoveServo3_Degrees(0);
+    MoveServo4_Degrees(0);
+    debounce(200);
+    OC5R =0x485;
+    MoveServo4_Degrees(80);
+    OC2R= 0x250; 
+    OC3R =0x250;
+    MoveServo2_Degrees(140);
+    debounce(200);
+    MoveServo4_Degrees(90);
+    LetGo();
+    debounce(200);
+    OC4R =0x10E;
+    debounce(100);
+    SetTo90();
+    debounce(50);
+    SetToInitial();
     
 }
 /*

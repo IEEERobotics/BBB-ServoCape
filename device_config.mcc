@@ -273,12 +273,12 @@
                 <setting name="OC32" option="disabled" register="OC5CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC5CON2"/>
                 <setting name="OC5RS" option="10000" register="OC5RS"/>
-                <setting name="OC5R" option="1141" register="OC5R"/>
+                <setting name="OC5R" option="1157" register="OC5R"/>
                 <setting name="OC5TMR" option="0" register="OC5TMR"/>
-                <additionalSetting name="onTime" option="11.41 %"/>
+                <additionalSetting name="onTime" option="11.57 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="2150061625" modified="false" name="oc5.c" path="mcc_generated_files/oc5.c"/>
+            <file checksum="4142683713" modified="false" name="oc5.c" path="mcc_generated_files/oc5.c"/>
             <file checksum="1893087229" modified="false" name="oc5.h" path="mcc_generated_files/oc5.h"/>
         </module>
         <module generated="true" mode="OC" name="OC6" order="6" reloadPin="auto" type="ocmp">
@@ -304,12 +304,12 @@
                 <setting name="OC32" option="disabled" register="OC6CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC6CON2"/>
                 <setting name="OC6RS" option="10000" register="OC6RS"/>
-                <setting name="OC6R" option="1141" register="OC6R"/>
+                <setting name="OC6R" option="1173" register="OC6R"/>
                 <setting name="OC6TMR" option="0" register="OC6TMR"/>
-                <additionalSetting name="onTime" option="11.41 %"/>
+                <additionalSetting name="onTime" option="11.73 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="976574112" modified="false" name="oc6.c" path="mcc_generated_files/oc6.c"/>
+            <file checksum="2718783143" modified="false" name="oc6.c" path="mcc_generated_files/oc6.c"/>
             <file checksum="4213913709" modified="false" name="oc6.h" path="mcc_generated_files/oc6.h"/>
         </module>
         <module generated="true" mode="TMR" name="TMR2" order="8" reloadPin="auto" type="tmr_32b">

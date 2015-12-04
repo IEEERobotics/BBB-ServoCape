@@ -125,7 +125,7 @@ void I2C2_Initialize(void) {
     I2C2STAT = 0x0000;
     // ADD 16; 
     I2C2_SlaveAddressSet(0x0010);
-    // MSK 127; 
+    // MSK 127;
     I2C2_SlaveAddressMaskSet(0x007F);
 
     // make sure this is set first
@@ -415,7 +415,7 @@ inline void __attribute__((always_inline)) I2C2_TransmitProcess(void) {
 
 }
 
-extern uint8_t LocalMemory[5]; 
+extern uint8_t LocalMemory[6]; 
 extern int i;
 extern int TransmitComplete; 
 

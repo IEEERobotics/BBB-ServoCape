@@ -180,12 +180,12 @@
                 <setting name="OC32" option="disabled" register="OC2CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC2CON2"/>
                 <setting name="OC2RS" option="10000" register="OC2RS"/>
-                <setting name="OC2R" option="239" register="OC2R"/>
+                <setting name="OC2R" option="1280" register="OC2R"/>
                 <setting name="OC2TMR" option="0" register="OC2TMR"/>
-                <additionalSetting name="onTime" option="2.39 %"/>
+                <additionalSetting name="onTime" option="12.8 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="611276016" modified="false" name="oc2.c" path="mcc_generated_files/oc2.c"/>
+            <file checksum="2771014903" modified="false" name="oc2.c" path="mcc_generated_files/oc2.c"/>
             <file checksum="3518576301" modified="false" name="oc2.h" path="mcc_generated_files/oc2.h"/>
         </module>
         <module generated="true" mode="OC" name="OC3" order="3" reloadPin="auto" type="ocmp">
@@ -211,12 +211,12 @@
                 <setting name="OC32" option="disabled" register="OC3CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC3CON2"/>
                 <setting name="OC3RS" option="10000" register="OC3RS"/>
-                <setting name="OC3R" option="239" register="OC3R"/>
+                <setting name="OC3R" option="1280" register="OC3R"/>
                 <setting name="OC3TMR" option="0" register="OC3TMR"/>
-                <additionalSetting name="onTime" option="2.39 %"/>
+                <additionalSetting name="onTime" option="12.8 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="22041946" modified="false" name="oc3.c" path="mcc_generated_files/oc3.c"/>
+            <file checksum="2182567265" modified="false" name="oc3.c" path="mcc_generated_files/oc3.c"/>
             <file checksum="1545418525" modified="false" name="oc3.h" path="mcc_generated_files/oc3.h"/>
         </module>
         <module generated="true" mode="OC" name="OC4" order="4" reloadPin="auto" type="ocmp">
@@ -242,12 +242,12 @@
                 <setting name="OC32" option="disabled" register="OC4CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC4CON2"/>
                 <setting name="OC4RS" option="10000" register="OC4RS"/>
-                <setting name="OC4R" option="1280" register="OC4R"/>
+                <setting name="OC4R" option="272" register="OC4R"/>
                 <setting name="OC4TMR" option="0" register="OC4TMR"/>
-                <additionalSetting name="onTime" option="12.8 %"/>
+                <additionalSetting name="onTime" option="2.7199999999999998 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="1009079752" modified="false" name="oc4.c" path="mcc_generated_files/oc4.c"/>
+            <file checksum="818959765" modified="false" name="oc4.c" path="mcc_generated_files/oc4.c"/>
             <file checksum="3866245005" modified="false" name="oc4.h" path="mcc_generated_files/oc4.h"/>
         </module>
         <module generated="true" mode="OC" name="OC5" order="5" reloadPin="auto" type="ocmp">
@@ -273,12 +273,12 @@
                 <setting name="OC32" option="disabled" register="OC5CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC5CON2"/>
                 <setting name="OC5RS" option="10000" register="OC5RS"/>
-                <setting name="OC5R" option="1157" register="OC5R"/>
+                <setting name="OC5R" option="272" register="OC5R"/>
                 <setting name="OC5TMR" option="0" register="OC5TMR"/>
-                <additionalSetting name="onTime" option="11.57 %"/>
+                <additionalSetting name="onTime" option="2.7199999999999998 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="4142683713" modified="false" name="oc5.c" path="mcc_generated_files/oc5.c"/>
+            <file checksum="229725695" modified="false" name="oc5.c" path="mcc_generated_files/oc5.c"/>
             <file checksum="1893087229" modified="false" name="oc5.h" path="mcc_generated_files/oc5.h"/>
         </module>
         <module generated="true" mode="OC" name="OC6" order="6" reloadPin="auto" type="ocmp">

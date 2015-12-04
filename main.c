@@ -81,6 +81,7 @@ void Grab();
 void LetGo();
 void GrabBlock();
 void SetToInitial();
+void SetToHome();
 void TestRange();
 void TestServo1();       //State 1 function 
 void TestServo2();       //State 2 function
@@ -93,7 +94,7 @@ void Jog();
 int main(void) {
     // initialize the device
     SYSTEM_Initialize();
-    
+    int x = 0;
     //Light show 
     debounce(2);
     PORTAbits.RA3 = 0;    //Led 4 
@@ -109,11 +110,14 @@ int main(void) {
     
     while (1) {
         //All mighty while loop
+      
         
         if(TransmitComplete){
             TransmitComplete = 0; 
+                                           
+            if(LocalMemory[0]== 0x00){
             SetTo90();
-            if(LocalMemory[0]== 0x01){
+            debounce(200);
             MoveServo1_Degrees(LocalMemory[1]); 
             debounce(1);
             MoveServo4_Degrees(LocalMemory[4]);
@@ -124,21 +128,42 @@ int main(void) {
             debounce(1);
             MoveServo5_Degrees(LocalMemory[5]);
             ResetMemory();  
+                 
             }
-            else if(LocalMemory[0]== 0x02){
+            else if(LocalMemory[0] != 0x00){
                 
-                switch(LocalMemory[1]){
+                switch(LocalMemory[0]){
                     case 1: GrabBlock();
+                            SetToHome();
                         break;
-                    case 2: break;
-                    case 3: break;
-                    case 4: break;
-                    case 5: break;
+                    case 2: Wave();
+                            SetToHome();
+                        break;
+                    case 3: SetTo90();
+                        break;
+                    case 4: Grab();
+                        break;
+                    case 5: LetGo();
+                        break;
+                    case 6: SetTo90();
+                            debounce(200);
+                            OC1R = 0x2F6;
+                            debounce(10);
+                            TestServo4();
+                            TestServo3();
+                            TestServo2();
+                            TestServo1();
+                            SetToHome();
+                            break;
+                    case 7: SetToHome();
+                            break;
+                            
+                            
                             
                     
                 }
             }
-            
+
         }
         
         if(PORTAbits.RA0 == 1){        //S1 pressed
@@ -178,6 +203,11 @@ int main(void) {
             PORTBbits.RB6 = 0; 
           
         }
+        
+        debounce(2); 
+        PORTBbits.RB6 = 1;
+        debounce(5);
+        PORTBbits.RB6 = 0;
     }
     return -1;
 }
@@ -268,7 +298,7 @@ void MakeSelection(S1){
         case 5:  TestServo5();
                  debounce(1);
                  break;
-        case 6:  TestServo6();
+        case 6:  Jog();
                  debounce(1);
                  break;
         case 7:  SetTo90();
@@ -276,7 +306,7 @@ void MakeSelection(S1){
                  break;
         case 8:  GrabBlock();
                  break;
-        case 9:  Jog();
+        default:  Jog();
                  break;
                  
         
@@ -437,7 +467,7 @@ void MoveServo4_Degrees(int degrees){
 
 void MoveServo5_Degrees(int degrees){
     int currentposition = OC5R; 
-    int desiredposition = 0x150 + degrees*0x04;  
+    int desiredposition = 0x120 + degrees*0x06;  
     int neededchange = desiredposition - currentposition;  
     int stepsize = neededchange/10;  
     
@@ -460,11 +490,11 @@ void MoveServo5_Degrees(int degrees){
 
 void Grab(){
     
-    while(OC6R>=0x230){
+    while(OC6R>=0x170){
         OC6R--;
         FastDebounce(1);
     }
-    OC6R = 0x235;
+    OC6R = 0x175;
 }
     
 void LetGo(){
@@ -492,21 +522,60 @@ void SetToInitial(){
     
 void Jog(){
     
+    SetToInitial(200);
+    debounce(200);
+    OC3R = 0x2F6; 
+    debounce(10);
+    OC2R = 0x200;
+    debounce(1);
+    OC4R = 0x200; 
+    debounce(1);
+    OC5R = 0x110;
+    Grab();
+    debounce(30);
+    OC5R = 0x485;
+    LetGo();
+    debounce(1);
+    OC5R = 0x110;
+    Grab();
+    debounce(30);
+    OC5R = 0x485;
+    LetGo();
+    debounce(30);
+    OC5R = 0x110;
+    Grab();
+    debounce(10);
+    OC5R = 0x485;
+    LetGo();
+    debounce(1);
+    OC5R = 0x110;
+    Grab();
+    debounce(10);
+    OC5R = 0x485;
+    LetGo();
+    debounce(10);
     SetTo90();
-    
-    OC5R = 0x465;
-    debounce(100);
-    OC5R = 0x150;
-    debounce(100);
-    OC1R = 0xE0;
-    MoveServo5_Degrees(0);
-    MoveServo5_Degrees(180);
-    OC1R = 0x485; 
+    debounce(200);
+    SetToInitial();
+  
     
     
     
     
+}
+
+void SetToHome(){
     
+    OC1R =0x2F6;;
+    debounce(1);
+    OC3R = 0x500;
+    debounce(1);
+    OC2R = 0x500;
+    debounce(1);
+    OC4R = 0x110;
+    debounce(1);
+    OC5R = 0x110;
+    debounce(1);
 }
 void TestRange(){
     while(1){
@@ -597,8 +666,80 @@ void FastDebounce(int cycles){
 
 
 //=================================================================================
+void Wave(){
+    
+    SetTo90();
+    int x = 0;
+    MoveServo1_Degrees(30);
+    OC5R = 0x2F6; 
+    
+    for(x = 0; x<1;x++){
 
+    
+    debounce(30);
+    OC4R = 0x250; 
+    debounce(15);
+    OC4R = 0x320;
+    debounce(30);
+    OC4R = 0x250;
+    debounce(15);
+    OC4R = 0x320;
+    debounce(40);
+    OC4R = 0x250;
+    debounce(15);
+    OC4R = 0x320;
+    debounce(30);
+    OC4R = 0x250;
+    }
+    MoveServo1_Degrees(80);
+    OC4R = 0x2F6;
+    for( x=0;x<1;x++){
+    debounce(15);
+    OC5R = 0x150; 
+    debounce(15);
+    OC5R = 0x230;
+    debounce(15);
+    OC5R = 0x150;
+    debounce(15);
+    OC5R = 0x230;
+    debounce(15);
+    OC5R = 0x110;
+    debounce(15);
+    OC5R = 0x230;
+    debounce(15);
+    OC5R = 0x110;
+    }
+    OC5R = 0x110; 
+    
+    
+   
+    for(x=0;x < 1;x++){
+        
+    debounce(15);
+    OC4R = 0x250; 
+    debounce(15);
+    OC4R = 0x320;
+    debounce(15);
+    OC4R = 0x250;
+    debounce(15);
+    OC4R = 0x320;
+    debounce(15);
+    OC4R = 0x250;
+    debounce(15);
+    OC4R = 0x320;
+    debounce(15);
+    OC4R = 0x250;
+    }
+    
+    OC5R = 0x485;
+    debounce(50);
+    
+    
+    
+}
 void GrabBlock(){
+    SetToInitial();
+    debounce(50);
     MoveServo1_Degrees(0);
     debounce(1);
     OC2R = 0x115;
@@ -621,20 +762,27 @@ void GrabBlock(){
     MoveServo3_Degrees(0);
     MoveServo4_Degrees(0);
     debounce(200);
-    OC5R =0x485;
+    
     MoveServo4_Degrees(80);
     OC2R= 0x250; 
     OC3R =0x250;
-    MoveServo2_Degrees(140);
+    MoveServo2_Degrees(100);
+    MoveServo3_Degrees(145);
+    MoveServo4_Degrees(15);
     debounce(200);
-    MoveServo4_Degrees(90);
     LetGo();
     debounce(200);
-    OC4R =0x10E;
+    
     debounce(100);
-    SetTo90();
+    OC4R=0x2F6;
+    debounce(10);
+    OC3R =0x2F6;
+    debounce(10);
+    OC5R = 0x120;
+    debounce(10);
+    OC2R = 0x350;
     debounce(50);
-    SetToInitial();
+   
     
 }
 /*
